@@ -1,0 +1,31 @@
+{
+  "extends": [
+    "group:allNonMajor",
+    "github>powerhome/renovate-config",
+    ":semanticCommits"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  },
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "automerge": true
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true
+    },
+    {
+      "description": "The gem doesn't ship its lockfiles, so bundler updates release nothing",
+      "matchManagers": ["bundler"],
+      "semanticCommitType": "chore"
+    }
+  ]
+}
