@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+#
+# Usage: .github/scripts/pin-lockfile-versions BRANCH
+#
+# release-please bumps ActiveRecord::MysqlRgeo::VERSION and Gemfile.lock, but
+# the Appraisal lockfiles in gemfiles/ pin the gem's own version too, in its
+# PATH spec and in the CHECKSUMS section Bundler 2.6 and later write. CI
+# installs in deployment mode, so any of them left on the old version fails
+# the build. This rewrites those pins to the version in
+# .release-please-manifest.json and, if anything changed, commits the
+# lockfiles to BRANCH through the GitHub API so the commit is signed. Runs in
+# CI: needs GNU sed, base64 and jq, GH_TOKEN and GITHUB_REPOSITORY.
+
+set -euo pipefail
+
+branch="$1"
+cd "$(dirname "${BASH_SOURCE[0]}")/../.."
+
+version="$(jq -r '."."' .release-please-manifest.json)"
+sed -i -E \
+  -e "s/^(    activerecord-mysql-rgeo \()[^)]*\)$/\1${version})/" \
+  -e "s/^(  activerecord-mysql-rgeo \()[^)]*\)$/\1${version})/" \
+  Gemfile.lock gemfiles/*.gemfile.lock
+
+mapfile -t changed < <(git diff --name-only)
+if [[ ${#changed[@]} -eq 0 ]]; then
+  echo "The lockfiles already pin activerecord-mysql-rgeo $version"
+  exit 0
+fi
+
+for file in "${changed[@]}"; do
+  jq -n --arg path "$file" --arg contents "$(base64 -w0 "$file")" '{$path, $contents}'
+done | jq -s \
+  --arg repo "$GITHUB_REPOSITORY" \
+  --arg branch "$branch" \
+  --arg head "$(git rev-parse HEAD)" \
+  --arg headline "chore: pin activerecord-mysql-rgeo $version in the lockfiles" \
+  '{
+    query: "mutation($input: CreateCommitOnBranchInput!) { createCommitOnBranch(input: $input) { commit { oid } } }",
+    variables: {input: {
+      branch: {repositoryNameWithOwner: $repo, branchName: $branch},
+      expectedHeadOid: $head,
+      message: {headline: $headline},
+      fileChanges: {additions: .}
+    }}
+  }' | gh api graphql --input -

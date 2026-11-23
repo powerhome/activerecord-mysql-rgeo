@@ -1,0 +1,23 @@
+name: activerecord-mysql-rgeo
+
+# Builds the gem on every push, for each Ruby and Appraisal gemfile below, and
+# publishes it to RubyGems when a v<version> tag is pushed. release-please
+# pushes that tag when its release pull request is merged.
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    uses: powerhome/github-actions-workflows/.github/workflows/ruby-gem.yml@main
+    with:
+      package: ${{ github.workflow }}
+      workdir: "."
+      release-tag: false
+      before_build: sudo apt-get update && sudo apt-get install -y libgeos-dev tzdata-legacy && sudo systemctl start mysql.service
+      gemfiles: "['gemfiles/rails_7_2.gemfile','gemfiles/rails_8_0.gemfile','gemfiles/rails_8_1.gemfile','gemfiles/rails_edge.gemfile']"
+      ruby: '["3.3", "3.4"]'
+    secrets: inherit
