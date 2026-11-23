@@ -11,14 +11,14 @@ Gem::Specification.new do |spec|
   spec.summary = "RGeo spatial support for Rails' own MySQL adapters (trilogy and mysql2)"
   spec.description = "Extends Active Record's built-in MySQL adapters (trilogy and mysql2) with spatial types, " \
                      "migrations and queries backed by RGeo. A drop-in replacement for activerecord-mysql2rgeo-adapter."
-  spec.homepage = "https://github.com/powerhome/power-tools"
+  spec.homepage = "https://github.com/powerhome/activerecord-mysql-rgeo"
   spec.license = "BSD-3-Clause"
   spec.required_ruby_version = ">= 3.3"
 
   spec.metadata["rubygems_mfa_required"] = "true"
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
-  spec.metadata["changelog_uri"] = "#{spec.homepage}/blob/main/packages/activerecord-mysql-rgeo/docs/CHANGELOG.md"
+  spec.metadata["changelog_uri"] = "#{spec.homepage}/blob/main/docs/CHANGELOG.md"
 
   spec.files = Dir["lib/**/*", "LICENSE.txt", "docs/README.md", "docs/CHANGELOG.md"]
   spec.require_paths = ["lib"]
