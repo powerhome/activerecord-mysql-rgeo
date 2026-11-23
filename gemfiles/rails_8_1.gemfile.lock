@@ -1,15 +1,4 @@
 PATH
-  remote: ../../rubocop-powerhome
-  specs:
-    rubocop-powerhome (0.7.0)
-      lint_roller (~> 1.1)
-      rubocop (= 1.82.1)
-      rubocop-performance (>= 1.24)
-      rubocop-rails (>= 2.28)
-      rubocop-rake (>= 0.7)
-      rubocop-rspec (>= 3.5)
-
-PATH
   remote: ..
   specs:
     activerecord-mysql-rgeo (1.0.0)
@@ -188,6 +177,13 @@ GEM
       lint_roller (~> 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.47.1, < 2.0)
+    rubocop-powerhome (0.8.0)
+      lint_roller (~> 1.1)
+      rubocop (= 1.82.1)
+      rubocop-performance (>= 1.24)
+      rubocop-rails (>= 2.28)
+      rubocop-rake (>= 0.7)
+      rubocop-rspec (>= 3.5)
     rubocop-rails (2.36.0)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)
@@ -242,7 +238,7 @@ DEPENDENCIES
   railties
   rake (~> 13.0)
   rspec (~> 3.13)
-  rubocop-powerhome!
+  rubocop-powerhome (~> 0.8)
   sqlite3
   trilogy (~> 2.9)
   tzinfo-data
@@ -314,7 +310,7 @@ CHECKSUMS
   rubocop (1.82.1) sha256=09f1a6a654a960eda767aebea33e47603080f8e9c9a3f019bf9b94c9cab5e273
   rubocop-ast (1.50.0) sha256=b9ca88300da0803ee222ad20cdb30494c0a784eed06fdc35d254b06d662788db
   rubocop-performance (1.26.1) sha256=cd19b936ff196df85829d264b522fd4f98b6c89ad271fa52744a8c11b8f71834
-  rubocop-powerhome (0.7.0)
+  rubocop-powerhome (0.8.0) sha256=790c7f1b34b9d3e997fc21f7626a0c23befbd7a775401567fe61cc63f3ed3b48
   rubocop-rails (2.36.0) sha256=105a5f5b0001ff2ef28a3af90da50862464e0775e8d0016d599079c0ca408bdb
   rubocop-rake (0.7.1) sha256=3797f2b6810c3e9df7376c26d5f44f3475eda59eb1adc38e6f62ecf027cbae4d
   rubocop-rspec (3.9.0) sha256=8fa70a3619408237d789aeecfb9beef40576acc855173e60939d63332fdb55e2

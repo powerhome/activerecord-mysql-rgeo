@@ -10,7 +10,7 @@ gem "trilogy", "~> 2.9"
 
 gem "rake", "~> 13.0"
 gem "rspec", "~> 3.13"
-gem "rubocop-powerhome", path: "../rubocop-powerhome"
+gem "rubocop-powerhome", "~> 0.8"
 
 # Needed by Active Record's own test suite (rake regression).
 gem "bcrypt"
